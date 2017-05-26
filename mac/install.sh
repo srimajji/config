@@ -3,7 +3,10 @@ command -v brew >/dev/null 2>&1 || {
   exit 1;
 }
 
+# /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
 brew install mysql@5.6
+brew install jenv
 brew install nvm
 brew install htop
 brew install git-extras
