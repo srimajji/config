@@ -1,0 +1,17 @@
+// Place your settings in this file to overwrite the default settings
+{
+    "editor.fontFamily": "mononoki, Monaco, 'Courier New', monospace",
+    "editor.fontSize": 13,
+    "editor.glyphMargin": false,
+    "files.trimTrailingWhitespace": true,
+    "git.path": "/usr/bin/git",
+    "telemetry.enableTelemetry": false,
+    "editor.tabSize": 4,
+    "editor.insertSpaces": false,
+    // When opening a file, `editor.tabSize` and `editor.insertSpaces` will be detected based on the file contents.
+    "editor.detectIndentation": true,
+	"javascript.validate.enable": false,
+    "workbench.colorTheme": "Panda Syntax",
+    "workbench.iconTheme": "vscode-great-icons",
+    "material-icon-theme.showWelcomeMessage": false
+}
