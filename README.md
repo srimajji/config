@@ -1,5 +1,5 @@
 # Config
-Checklist to set up my environment. Inspired by [mdo/config](https://github.com/srimajji/config.git)
+Checklist to set up my environment. Inspired by [mdo/config](https://github.com/mdo/config)
 
 
 ## Tools
