@@ -1,3 +1,22 @@
+[user]
+	name = srimajji
+	email = sri.majji@outlook.com
+
+[core]
+	excludesfile = ~/.gitignore_global
+	autocrlf = input
+
+[push]
+	default = simple
+
+[alias]
+	d = diff --word-diff
+	s = status -sb
+	p = fetch --prune
+	l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+	b = branch -l
+	r = reset --h
+
 [color]
 	diff = auto
 	status = auto
@@ -23,19 +42,3 @@
 	updated = magenta bold
 	untracked = red bold
 	header = cyan bold
-[user]
-	name = srimajji
-	email = sri.majji@outlook.com
-[core]
-	excludesfile = ~/.gitignore_global
-	autocrlf = input
-	editor = vim
-[push]
-	default = simple
-[alias]
-	d = diff --word-diff
-	s = status -sb
-	p = fetch --prune
-	l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
-	b = branch -l
-	r = reset --h
