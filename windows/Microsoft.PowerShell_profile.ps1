@@ -31,6 +31,9 @@ Import-Module posh-gvm
 # Load posh-git example profile
 . 'C:\Users\Sri\Documents\WindowsPowerShell\Modules\posh-git\profile.example.ps1'
 
+# Launch code
+function code{Invoke-Expression("& 'C:\Code\Editors\Microsoft VS Code Insiders\bin\code-insiders.cmd' $args")}
+
 # Load custom prompt
 function Test-Administrator {
     $user = [Security.Principal.WindowsIdentity]::GetCurrent();
