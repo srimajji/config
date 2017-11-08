@@ -1,9 +1,21 @@
 Set-Location C:\Users\Sri\Documents
 $Global:PGVM_DIR = "C:\Code\Sdk\GVM"
 $Global:GRAILS_HOME= "C:\Code\Sdk\GVM\grails\current"
-$env:GRAILS_OPTS= "-server -Xmx1768M -Xms256M -XX:PermSize=64m -XX:MaxPermSize=512m -Dfile.encoding=UTF-8"
+$env:SCOOP = "C:\Users\Sri\AppData\Local\Scoop"
+$env:NODE_ENV = "development"
 
-$env:NODE_ENV="development"
+# Import Modules
+Import-Module PsGet
+
+# Launch posh-gvm
+Import-Module posh-gvm
+
+# Load posh-git example profile
+Import-Module posh-git
+
+# Alias
+Set-Alias open Invoke-Item
+Remove-Item alias:curl
 
 # Launch get-childItem-color profile
 . 'C:\Users\Sri\Documents\WindowsPowerShell\Modules\Get-ChildItem-Color\Get-ChildItem-Color.ps1'
@@ -25,14 +37,7 @@ Set-PSReadlineKeyHandler -Key DownArrow -Function HistorySearchForward
 Set-PSReadlineKeyHandler -Chord 'Shift+Tab' -Function Complete
 Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
 
-# Launch posh-gvm
-Import-Module posh-gvm
-
-# Load posh-git example profile
-. 'C:\Users\Sri\Documents\WindowsPowerShell\Modules\posh-git\profile.example.ps1'
-
-# Launch code
-function code{Invoke-Expression("& 'C:\Code\Editors\Microsoft VS Code Insiders\bin\code-insiders.cmd' $args")}
+# function code{Invoke-Expression("& 'C:\Code\Editors\Microsoft VS Code Insiders\bin\code-insiders.cmd' $args")}
 
 # Load custom prompt
 function Test-Administrator {
@@ -52,8 +57,8 @@ function prompt {
         Write-Host "(Elevated) " -NoNewline -ForegroundColor White
     }
 
-    Write-Host "$ENV:USERNAME@" -NoNewline -ForegroundColor DarkYellow
-    Write-Host "$ENV:COMPUTERNAME" -NoNewline -ForegroundColor Magenta
+    # Write-Host "$ENV:USERNAME@" -NoNewline -ForegroundColor DarkYellow
+    # Write-Host "$ENV:COMPUTERNAME" -NoNewline -ForegroundColor Magenta
 
     if ($s -ne $null) {  # color for PSSessions
         Write-Host " (`$s: " -NoNewline -ForegroundColor DarkGray
@@ -61,11 +66,11 @@ function prompt {
         Write-Host ") " -NoNewline -ForegroundColor DarkGray
     }
 
-    Write-Host " : " -NoNewline -ForegroundColor DarkGray
+    # Write-Host " : " -NoNewline -ForegroundColor DarkGray
     Write-Host $($(Get-Location) -replace "C:\\Users\\Sri", "~") -NoNewline -ForegroundColor Blue
     Write-Host " : " -NoNewline -ForegroundColor DarkGray
     Write-Host (Get-Date -Format G) -NoNewline -ForegroundColor DarkMagenta
-    Write-Host " : " -NoNewline -ForegroundColor DarkGray
+    # Write-Host " : " -NoNewline -ForegroundColor DarkGray
 
     $global:LASTEXITCODE = $realLASTEXITCODE
 
@@ -75,3 +80,6 @@ function prompt {
 
     return "> "
 }
+
+if (Test-Path "C:\Users\Sri\.jabba\jabba.ps1") { . "C:\Users\Sri\.jabba\jabba.ps1" }
+
