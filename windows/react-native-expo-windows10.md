@@ -28,7 +28,7 @@ The below steps will ensure that the emulator won't have stability issues when i
 * Start emulator and get it's ip address from `about phone` settings
 * In powershell `adb connect {ip}:5555`
 
-# Expo setup
+### Expo setup
 * Install expo
 * Create new project and start
 * Once it is ready, click on Share -> Connect to android
