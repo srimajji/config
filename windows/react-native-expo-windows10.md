@@ -1,4 +1,4 @@
-# React-native setup in Windows 10 with Ryzen
+# React-native setup in Windows 10 for Ryzen CPU
 
 This is a guide to setup and run react-native app on a ryzen system. 
 
