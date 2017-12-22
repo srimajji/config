@@ -14,7 +14,11 @@ Import-Module posh-gvm
 Import-Module posh-git
 
 # Alias
+Set-Alias g2 runGrails2
+Set-Alias g3 runGrails3
 Set-Alias open Invoke-Item
+
+# Remove powershell curl (use curl from coreutils)
 Remove-Item alias:curl
 
 # Launch get-childItem-color profile
@@ -29,7 +33,8 @@ Set-PSReadLineOption -HistoryNoDuplicates
 Set-PSReadLineOption -HistorySearchCursorMovesToEnd
 Set-PSReadLineOption -HistorySaveStyle SaveIncrementally
 Set-PSReadLineOption -MaximumHistoryCount 4000
-# history substring search
+
+# History substring search
 Set-PSReadlineKeyHandler -Key UpArrow -Function HistorySearchBackward
 Set-PSReadlineKeyHandler -Key DownArrow -Function HistorySearchForward
 
@@ -37,7 +42,10 @@ Set-PSReadlineKeyHandler -Key DownArrow -Function HistorySearchForward
 Set-PSReadlineKeyHandler -Chord 'Shift+Tab' -Function Complete
 Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
 
-# function code{Invoke-Expression("& 'C:\Code\Editors\Microsoft VS Code Insiders\bin\code-insiders.cmd' $args")}
+# Custom functions
+function runGrails2($args) { jabba use system@1.7.0; gvm use grails 2.3.11; grails $args }
+function runGrails3($args) { jabba use system@1.8.0; gvm use grails 3.2.11; grails $args }
+#function code{Invoke-Expression("& 'C:\Code\Editors\Microsoft VS Code Insiders\bin\code-insiders.cmd' $args")}
 
 # Load custom prompt
 function Test-Administrator {
@@ -82,4 +90,3 @@ function prompt {
 }
 
 if (Test-Path "C:\Users\Sri\.jabba\jabba.ps1") { . "C:\Users\Sri\.jabba\jabba.ps1" }
-
