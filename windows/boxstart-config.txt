@@ -1,5 +1,4 @@
 Disable-UAC
-Update-ExecutionPolicy RemoteSigned
 Set-WindowsExplorerOptions -EnableShowHiddenFilesFoldersDrives -EnableShowFileExtensions -EnableExpandToOpenFolder -DisableShowRecentFilesInQuickAccess
 
 cinst 7zip

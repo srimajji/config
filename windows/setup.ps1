@@ -48,7 +48,7 @@ echo "$env:ProgramData\ChocoTools"
 # Install boxstarter
 echo "Initialize boxstarter..."
 . { iwr -useb http://boxstarter.org/bootstrapper.ps1 } | iex; get-boxstarter -Force
-Install-BoxstarterPackage -PackgeName 
+Install-BoxstarterPackage -PackgeName https://raw.githubusercontent.com/srimajji/config/master/windows/boxstart-config.txt -DisableReboots
 
 # Install powershell modules
 echo "Installing powershell modules..."
