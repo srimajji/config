@@ -2,7 +2,7 @@
 # Author: Sri Majji (sri.majji@live.com)
 
 # requires -v 3
-echo '
+echo "
 __      __                  __                                                  __                                                           __      
 /\ \  __/\ \  __            /\ \                                                /\ \__                                             __        /\ \__   
 \ \ \/\ \ \ \/\_\    ___    \_\ \    ___   __  __  __    ____        ____     __\ \ ,_\  __  __  _____         ____    ___   _ __ /\_\  _____\ \ ,_\  
@@ -22,7 +22,8 @@ __      __                  __                                                  
                                                       \ \____/\ \____/                                                                                
                                                        \/___/  \/___/                                                                                 
 
-'
+"
+
 if(($PSVersionTable.PSVersion.Major) -lt 3) {
   Write-Output "PowerShell 3 or greater is required to run Scoop."
   Write-Output "Upgrade PowerShell: https://docs.microsoft.com/en-us/powershell/scripting/setup/installing-windows-powershell"
