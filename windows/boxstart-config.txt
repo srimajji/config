@@ -1,0 +1,20 @@
+Disable-UAC
+Update-ExecutionPolicy RemoteSigned
+Set-WindowsExplorerOptions -EnableShowHiddenFilesFoldersDrives -EnableShowFileExtensions -EnableExpandToOpenFolder -DisableShowRecentFilesInQuickAccess
+
+cinst 7zip
+cinst git.install /GitAndUnixToolsOnPath /NoCredentialManager 
+cinst git-credential-manager-for-windows
+cinst nvm
+cinst yarn --ignore-dependencies --yes
+cinst visualstudiocode intellijidea-ultimate 
+cinst googlechrome
+cinst docker-for-windows 
+
+cinst Microsoft-Hyper-V-All -source windowsFeatures
+cinst Microsoft-Windows-Subsystem-Linux -source windowsFeatures
+cinst HypervisorPlatform -source windowsFeatures
+cinst TelnetClient -source windowsFeatures
+Enable-UAC
+
+Install-WindowsUpdate getUpdatesFromMS -AcceptEula
