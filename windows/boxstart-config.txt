@@ -2,13 +2,16 @@ Disable-UAC
 Set-WindowsExplorerOptions -EnableShowHiddenFilesFoldersDrives -EnableShowFileExtensions -EnableExpandToOpenFolder -DisableShowRecentFilesInQuickAccess
 
 cinst 7zip
-cinst git.install /GitAndUnixToolsOnPath /NoCredentialManager 
-cinst git-credential-manager-for-windows
+cinst "git /GitOnlyOnPath /NoCredentialManager"
+cinst git-credential-manager-for-windows 
+cinst gnuwin32-coreutils.install
+cinst visualstudiocode 
+cinst intellijidea-ultimate
+cinst authy-desktop
+cinst 1password
+cinst docker-for-windows
 cinst nvm
 cinst yarn --ignore-dependencies --yes
-cinst visualstudiocode intellijidea-ultimate 
-cinst googlechrome
-cinst docker-for-windows 
 
 cinst Microsoft-Hyper-V-All -source windowsFeatures
 cinst Microsoft-Windows-Subsystem-Linux -source windowsFeatures
