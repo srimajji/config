@@ -3,6 +3,20 @@
 
 # requires -v 3
 
+if(($PSVersionTable.PSVersion.Major) -lt 3) {
+  Write-Output "PowerShell 3 or greater is required to run Scoop."
+  Write-Output "Upgrade PowerShell: https://docs.microsoft.com/en-us/powershell/scripting/setup/installing-windows-powershell"
+  break
+}
+
+# show notification to change execution policy:
+if((get-executionpolicy) -gt 'Unrestricted') {
+  Write-Output "PowerShell requires an execution policy of 'Unrestricted' to run this script."
+  Write-Output "To make this change please run:"
+  Write-Output "'Set-ExecutionPolicy Unrestricted -scope CurrentUser'"
+  break
+}
+
 # Run as admin
 If (-NOT ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator"))
 {   
@@ -12,7 +26,7 @@ Break
 }
 
 echo "Set-ExecutionPolicy AllSigned..."
-Set-ExecutionPolicy AllSigned  -scope CurrentUser 
+Set-ExecutionPolicy Unrestricted  -scope CurrentUser 
 
 # Create profile
 if (-not $(Test-path $profile)) {
