@@ -1,28 +1,11 @@
 # Setup script for windows machine
 # Author: Sri Majji (sri.majji@live.com)
-
-# requires -v 3
-echo "
-__      __                  __                                                  __                                                           __      
-/\ \  __/\ \  __            /\ \                                                /\ \__                                             __        /\ \__   
-\ \ \/\ \ \ \/\_\    ___    \_\ \    ___   __  __  __    ____        ____     __\ \ ,_\  __  __  _____         ____    ___   _ __ /\_\  _____\ \ ,_\  
- \ \ \ \ \ \ \/\ \ /' _ `\  /'_` \  / __`\/\ \/\ \/\ \  /',__\      /',__\  /'__`\ \ \/ /\ \/\ \/\ '__`\      /',__\  /'___\/\`'__\/\ \/\ '__`\ \ \/  
-  \ \ \_/ \_\ \ \ \/\ \/\ \/\ \L\ \/\ \L\ \ \ \_/ \_/ \/\__, `\    /\__, `\/\  __/\ \ \_\ \ \_\ \ \ \L\ \    /\__, `\/\ \__/\ \ \/ \ \ \ \ \L\ \ \ \_ 
-   \ `\___x___/\ \_\ \_\ \_\ \___,_\ \____/\ \___x___/'\/\____/    \/\____/\ \____\\ \__\\ \____/\ \ ,__/    \/\____/\ \____\\ \_\  \ \_\ \ ,__/\ \__\
-    '\/__//__/  \/_/\/_/\/_/\/__,_ /\/___/  \/__//__/   \/___/      \/___/  \/____/ \/__/ \/___/  \ \ \/      \/___/  \/____/ \/_/   \/_/\ \ \/  \/__/
-                                                                                                   \ \_\                                  \ \_\       
-                                                                                                    \/_/                                   \/_/       
-           ____                                                                                                                                       
-          /\  _`\          __      /'\_/`\             __      __  __                                                                                 
-          \ \,\L\_\  _ __ /\_\    /\      \     __    /\_\    /\_\/\_\                                                                                
- _______   \/_\__ \ /\`'__\/\ \   \ \ \__\ \  /'__`\  \/\ \   \/\ \/\ \                                                                               
-/\______\    /\ \L\ \ \ \/ \ \ \   \ \ \_/\ \/\ \L\.\_ \ \ \   \ \ \ \ \                                                                              
-\/______/    \ `\____\ \_\  \ \_\   \ \_\\ \_\ \__/.\_\_\ \ \  _\ \ \ \_\                                                                             
-              \/_____/\/_/   \/_/    \/_/ \/_/\/__/\/_/\ \_\ \/\ \_\ \/_/                                                                             
-                                                      \ \____/\ \____/                                                                                
-                                                       \/___/  \/___/                                                                                 
-
-"
+# 
+# Powershell setup script for a windows dev machine
+# This script requires elavated prompt and powershell v3+
+# 
+# Execute below line in a new shell
+# iex (new-object net.webclient).downloadstring("https://raw.githubusercontent.com/srimajji/config/master/windows/setup.ps1")
 
 if(($PSVersionTable.PSVersion.Major) -lt 3) {
   Write-Output "PowerShell 3 or greater is required to run Scoop."
@@ -46,7 +29,7 @@ Start-Process powershell -Verb runAs -ArgumentList $arguments
 Break
 }
 
-echo "Set-ExecutionPolicy AllSigned..."
+echo "Set-ExecutionPolicy Unrestricted..."
 Set-ExecutionPolicy Unrestricted  -scope CurrentUser 
 
 # Create profile
@@ -83,23 +66,25 @@ echo "$env:ProgramData\ChocoTools"
 # Install boxstarter
 echo "Initialize boxstarter..."
 . { iwr -useb http://boxstarter.org/bootstrapper.ps1 } | iex; get-boxstarter -Force
-Install-BoxstarterPackage -PackgeName https://raw.githubusercontent.com/srimajji/config/master/windows/boxstart-config.txt -DisableReboots
+Install-BoxstarterPackage -PackageName https://raw.githubusercontent.com/srimajji/config/master/windows/boxstart-config.txt -DisableReboots
 
 # Install powershell modules
 echo "Installing powershell modules..."
 Install-PackageProvider -Name Nuget
-Install-Module -Name PowerShellGet
-Install-Module -Name posh-git
-Install-Module oh-my-posh
 
+Install-Module -Name PowerShellGet
 Import-Module PowerShellGet -Force
-Import-Module posh-git -Force
-Import-Module oh-my-posh -Force
+
+Install-Module -Name posh-git
+Import-Module -Name posh-git -Force
+
+Install-Module -Name PSReadLine -AllowPrerelease 
+Import-Module -Name PSReadLine -Force
 
 echo '
-ImportModule PowerShellGet
-ImportModule posh-git
-ImportModule oh-my-posh
+Import-Module PowerShellGet
+Import-Module posh-git
+Import-Module PSReadLine
 ' >> "$profile"
 
 # Install Jabba => https://github.com/shyiko/jabba
@@ -129,10 +114,52 @@ $global:PGVM_DIR = "$env:USERPROFILE\.sdk"
 Import-Module posh-gvm -Force
 echo "Import-Module posh-gvm" >> "$profile"
 
-# Set up grails
-gvm install grails 2.5.6
-gvm use grails 2.5.6
-$env:GRAILS_HOME = "$env:USERPROFILE\.sdk\grails\current"
+# Remove useless apps
+Get-AppxPackage Microsoft.Messaging | Remove-AppxPackage
+Get-AppxPackage *Minecraft* | Remove-AppxPackage
+Get-AppxPackage Microsoft.MicrosoftOfficeHub | Remove-AppxPackage
+Get-AppxPackage Microsoft.OneConnect | Remove-AppxPackage
+Get-AppxPackage Microsoft.Office.OneNote | Remove-AppxPackage
+Get-AppxPackage Microsoft.SkypeApp | Remove-AppxPackage
+Get-AppxPackage *Solitaire* | Remove-AppxPackage
+Get-AppxPackage Microsoft.MicrosoftStickyNotes | Remove-AppxPackage
+Get-AppxPackage Microsoft.Office.Sway | Remove-AppxPackage
+Get-AppxPackage Soda | Remove-AppxPackage
+Get-AppxPackage *AutodeskSketchBook* | Remove-AppxPackage
+Get-AppxPackage Microsoft.MSPaint | Remove-AppxPackage
+Get-AppxPackage *DisneyMagicKingdoms* | Remove-AppxPackage
+Get-AppxPackage *DolbyAccess* | Remove-AppxPackage
+Get-AppxPackage *MarchofEmpires* | Remove-AppxPackage
 
-# nvm
+#--- Windows Settings ---
+# Some from: @NickCraver's gist https://gist.github.com/NickCraver/7ebf9efbfd0c3eab72e9
+
+# Privacy: Let apps use my advertising ID: Disable
+If (-Not (Test-Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\AdvertisingInfo")) {
+  New-Item -Path HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\AdvertisingInfo | Out-Null
+}
+Set-ItemProperty -Path HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\AdvertisingInfo -Name Enabled -Type DWord -Value 0
+
+# WiFi Sense: HotSpot Sharing: Disable
+If (-Not (Test-Path "HKLM:\Software\Microsoft\PolicyManager\default\WiFi\AllowWiFiHotSpotReporting")) {
+  New-Item -Path HKLM:\Software\Microsoft\PolicyManager\default\WiFi\AllowWiFiHotSpotReporting | Out-Null
+}
+Set-ItemProperty -Path HKLM:\Software\Microsoft\PolicyManager\default\WiFi\AllowAutoConnectToWiFiSenseHotspots -Name value -Type DWord -Value 0
+
+
+# Change Explorer home screen back to "This PC"
+Set-ItemProperty -Path HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced -Name LaunchTo -Type DWord -Value 1
+# Change it back to "Quick Access" (Windows 10 default)
+# Set-ItemProperty -Path HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced -Name LaunchTo -Type DWord -Value 2
+
+Enable-UAC
+Enable-MicrosoftUpdate
+Install-WindowsUpdate -acceptEula
+
+# Requires restart, or add the -Restart flag
+$computername = "trap"
+if ($env:computername -ne $computername) {
+	Rename-Computer -NewName $computername
+}
+
 echo "Finished setup. Enjoy!"
