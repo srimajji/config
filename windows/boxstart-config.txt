@@ -21,4 +21,4 @@ cinst HypervisorPlatform -source windowsFeatures
 cinst TelnetClient -source windowsFeatures
 Enable-UAC
 
-Install-WindowsUpdate getUpdatesFromMS -AcceptEula
+Install-WindowsUpdate -GetUpdatesFromMS -AcceptEula
