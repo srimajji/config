@@ -5,7 +5,7 @@
 # This script requires elavated prompt and powershell v3+
 # 
 # Execute below line in a new shell
-# iex (new-object net.webclient).downloadstring("https://raw.githubusercontent.com/srimajji/config/master/windows/setup.ps1")
+# iex (new-object net.webclient).downloadstring("https://raw.githubusercontent.com/srimajji/config/master/setup.ps1")
 
 if(($PSVersionTable.PSVersion.Major) -lt 3) {
   Write-Output "PowerShell 3 or greater is required to run Scoop."
@@ -39,7 +39,7 @@ if (-not $(Test-path $profile)) {
 
     echo "Adding custom commands..."
     echo '
-Set-Location C:\Users\Sri\Documents
+Set-Location "$env:USERPROFILE\Documents"
 $env:PGVM_DIR = "$env:USERPROFILE\.sdk"
 $env:GRAILS_HOME = "$env:USERPROFILE\.sdk\grails\current"
 $env:JABBA_HOME = "$env:USERPROFILE\.sdk\java"
@@ -66,7 +66,7 @@ echo "$env:ProgramData\ChocoTools"
 # Install boxstarter
 echo "Initialize boxstarter..."
 . { iwr -useb http://boxstarter.org/bootstrapper.ps1 } | iex; get-boxstarter -Force
-Install-BoxstarterPackage -PackageName https://raw.githubusercontent.com/srimajji/config/master/windows/boxstart-config.txt -DisableReboots
+Install-BoxstarterPackage -PackageName https://raw.githubusercontent.com/srimajji/config/master/boxstarter-config.txt -DisableReboots
 
 # Install powershell modules
 echo "Installing powershell modules..."
