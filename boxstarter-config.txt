@@ -5,15 +5,19 @@ cinst 7zip
 cinst git --params="'/GitOnlyOnPath /NoCredentialManager /NoShellIntegration /WindowsTerminal'" -y
 cinst git-credential-manager-for-windows 
 cinst vim
-cinst gnuwin32-coreutils.install
+cinst sudo
+cinst which
+cinst gnuwin32-coreutils.install 
+cinst mysql
+cinst nvm
 cinst visualstudiocode 
 cinst intellijidea-ultimate
 cinst authy-desktop
 cinst 1password
 cinst hyper
 cinst docker-for-windows
-cinst nvm
 cinst yarn --ignore-dependencies --yes
+cinst hyper
 
 cinst Microsoft-Hyper-V-All -source windowsFeatures
 cinst Microsoft-Windows-Subsystem-Linux -source windowsFeatures
