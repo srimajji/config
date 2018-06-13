@@ -131,6 +131,9 @@ Get-AppxPackage Microsoft.MSPaint | Remove-AppxPackage
 Get-AppxPackage *DisneyMagicKingdoms* | Remove-AppxPackage
 Get-AppxPackage *DolbyAccess* | Remove-AppxPackage
 Get-AppxPackage *MarchofEmpires* | Remove-AppxPackage
+Get-AppxPackage *candycrush* | Remove-AppxPackage
+Get-AppxPackage *hiddencity* | Remove-AppxPackage
+
 
 #--- Windows Settings ---
 # Some from: @NickCraver's gist https://gist.github.com/NickCraver/7ebf9efbfd0c3eab72e9
