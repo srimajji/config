@@ -8,7 +8,6 @@ cinst vim
 cinst sudo
 cinst which
 cinst gnuwin32-coreutils.install 
-cinst mysql
 cinst nvm
 cinst visualstudiocode 
 cinst intellijidea-ultimate
