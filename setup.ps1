@@ -58,14 +58,15 @@ function ielocal($port) { Start-Process "edge.exe" "http://lolcalhost:$port" }
 
 }
 
-# Setup Chocolately tools location
-echo "Create chocolatlely tools location env variable..."
-echo "$env:ProgramData\ChocoTools"
-[Environment]::SetEnvironmentVariable('ChocolatelyToolsLocation', "$env:ProgramData\ChocoTools", 'Machine')
-
 # Install boxstarter
 echo "Initialize boxstarter..."
 . { iwr -useb http://boxstarter.org/bootstrapper.ps1 } | iex; get-boxstarter -Force
+
+# Setup Chocolately tools location
+echo "Create chocolatlely tools location env variable..."
+echo "$env:ProgramData\ChocoTools"
+[Environment]::SetEnvironmentVariable('ChocolateyToolsLocation', "$env:ProgramData\ChocoTools", 'USER')
+
 Install-BoxstarterPackage -PackageName https://raw.githubusercontent.com/srimajji/config/master/boxstarter-config.txt -DisableReboots
 
 # Install powershell modules
@@ -78,7 +79,7 @@ Import-Module PowerShellGet -Force
 Install-Module -Name posh-git
 Import-Module -Name posh-git -Force
 
-Install-Module -Name PSReadLine -AllowPrerelease 
+Install-Module -Name PSReadLine 
 Import-Module -Name PSReadLine -Force
 
 echo '
