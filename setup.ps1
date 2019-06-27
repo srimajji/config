@@ -7,7 +7,16 @@
 # Execute below line in a new shell
 # iex (new-object net.webclient).downloadstring("https://raw.githubusercontent.com/srimajji/config/master/setup.ps1")
 
-if(($PSVersionTable.PSVersion.Major) -lt 3) {
+Param (
+  [string] $computerName
+)
+
+# get computerName
+if (-not $computerName) {
+  $computerName = Read-Host "? Computer name"
+}
+
+if(($PSVersionTable.PSVersion.Major) -lt 5) {
   Write-Output "PowerShell 3 or greater is required to run Scoop."
   Write-Output "Upgrade PowerShell: https://docs.microsoft.com/en-us/powershell/scripting/setup/installing-windows-powershell"
   break
@@ -40,20 +49,16 @@ if (-not $(Test-path $profile)) {
     echo "Adding custom commands..."
     echo '
 Set-Location "$env:USERPROFILE\Documents"
-$env:PGVM_DIR = "$env:USERPROFILE\.sdk"
-$env:GRAILS_HOME = "$env:USERPROFILE\.sdk\grails\current"
 $env:JABBA_HOME = "$env:USERPROFILE\.sdk\java"
 $env:NODE_ENV = "development"
 Set-Alias open Invoke-Item
-function g2($args) { jabba use system@1.7.0; gvm use grails 2.3.11; grails "$args" }
-function g3($args) { jabba use system@1.8.0; gvm use grails 3.2.11; grails "$args" }
 function cl() { clear }
 function chrome() { Start-Process "chrome.exe" }
 function chromelocal($port) { Start-Process "chrome.exe" "http://localhost:$port" }
 function firefox() { Start-Process "firefox.exe" "www.google.com" }
 function firefoxlocal($port) { Start-Process "firefox.exe" "http://localhost:$port" }
-function ie() { Start-Process "edge.exe" }
-function ielocal($port) { Start-Process "edge.exe" "http://lolcalhost:$port" }
+function ie() { Start-Process "msedge.exe" }
+function ielocal($port) { Start-Process "msedge.exe" "http://lolcalhost:$port" }
 ' >> "$profile"
 
 }
@@ -73,19 +78,14 @@ Install-BoxstarterPackage -PackageName https://raw.githubusercontent.com/srimajj
 echo "Installing powershell modules..."
 Install-PackageProvider -Name Nuget
 
-Install-Module -Name PowerShellGet
-Import-Module PowerShellGet -Force
+Install-Module -Name oh-my-posh -Scope CurrentUser
+Install-Module -Name posh-git -Scope CurrentUser
 
-Install-Module -Name posh-git
-Import-Module -Name posh-git -Force
-
-Install-Module -Name PSReadLine 
-Import-Module -Name PSReadLine -Force
 
 echo '
-Import-Module PowerShellGet
+Import-Module oh-my-posh
+Set-Theme pure
 Import-Module posh-git
-Import-Module PSReadLine
 ' >> "$profile"
 
 # Install Jabba => https://github.com/shyiko/jabba
@@ -96,10 +96,10 @@ Invoke-Expression (
   Invoke-WebRequest https://github.com/shyiko/jabba/raw/master/install.ps1 -UseBasicParsing
 ).Content
 
-# Install jdk 1.8
-jabba install 1.8
-jabba use 1.8
-jabba alias default 1.8
+# Install jdk 1.9
+jabba install adopt@1.9.0-4
+jabba use adopt@1.9.0-4
+jabba alias default adopt@1.9.0-4
 
 # modify global PATH & JAVA_HOME
 echo "Setting up JAVA_HOME..."
@@ -107,13 +107,6 @@ $envRegKey = [Microsoft.Win32.Registry]::LocalMachine.OpenSubKey('SYSTEM\Current
 $envPath=$envRegKey.GetValue('Path', $null, "DoNotExpandEnvironmentNames").replace('%JAVA_HOME%\bin;', '')
 [Environment]::SetEnvironmentVariable('JAVA_HOME', "$(jabba which $(jabba current))", 'Machine')
 [Environment]::SetEnvironmentVariable('PATH', "%JAVA_HOME%\bin;$envPath", 'Machine')
-
-
-# Install posh-gvm => https://github.com/flofreud/posh-gvm
-$global:PGVM_DIR = "$env:USERPROFILE\.sdk"
-(new-object Net.WebClient).DownloadString('https://raw.githubusercontent.com/flofreud/posh-gvm/master/GetPoshGvm.ps1') | iex
-Import-Module posh-gvm -Force
-echo "Import-Module posh-gvm" >> "$profile"
 
 # Remove useless apps
 Get-AppxPackage Microsoft.Messaging | Remove-AppxPackage
@@ -133,6 +126,7 @@ Get-AppxPackage *DolbyAccess* | Remove-AppxPackage
 Get-AppxPackage *MarchofEmpires* | Remove-AppxPackage
 Get-AppxPackage *candycrush* | Remove-AppxPackage
 Get-AppxPackage *hiddencity* | Remove-AppxPackage
+Get-AppxPackage *fitbit* | Remove-AppxPackage
 
 
 #--- Windows Settings ---
@@ -161,9 +155,6 @@ Enable-MicrosoftUpdate
 Install-WindowsUpdate -acceptEula
 
 # Requires restart, or add the -Restart flag
-$computername = "trap"
-if ($env:computername -ne $computername) {
-	Rename-Computer -NewName $computername
-}
+Rename-Computer -NewName $computerNames
 
-echo "Finished setup. Enjoy!"
+echo "Finished setup. Restart and ejoy!"

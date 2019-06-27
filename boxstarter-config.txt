@@ -13,13 +13,13 @@ cinst visualstudiocode
 cinst intellijidea-ultimate
 cinst authy-desktop
 cinst 1password
-cinst hyper
 cinst docker-for-windows
 cinst yarn --ignore-dependencies --yes
-cinst hyper
+cinst powershell-core
 
 cinst Microsoft-Hyper-V-All -source windowsFeatures
 cinst Microsoft-Windows-Subsystem-Linux -source windowsFeatures
+cinst VirtualMachinePlatform -source windowsFeatures
 cinst HypervisorPlatform -source windowsFeatures
 cinst TelnetClient -source windowsFeatures
 Enable-UAC
